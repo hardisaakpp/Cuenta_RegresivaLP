@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Este archivo se usa en el proceso de publicación y empaquetado del proyecto web. Para personalizar el comportamiento de este proceso,
+edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 para obtener más información. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJ6Yr8esEfkKjWhue2hxMHwAAAAACAAAAAAAQZgAAAAEAACAAAAB7GXVtXTcWnt32u2ei4UtxogdjpPga9WFzW9CC7KhJ/QAAAAAOgAAAAAIAACAAAAD6uuEeFHenGzkxLvbu3bjmrK4kpJtNqgS/hCusCBsccoAAAACySNHD18dIPzgxjsef/4uD0T+YDjWnx7YsrBHAfnTHBWq4MvLmVC1Z9Pod5SDWjLKTC9ihK6Fm9PbYgAyLt17U6oKQbMG1cgdIGid2RatFnl4GuvQ+ViM8EKcTC+pUfQwaqeOFL7IghfSeROyL+uWkpAvUBRxhRA3I+8CQsG6o+EAAAAD2exM6jsECZaR00tIrsdoPpSqmg7nh6tQbQHWlC/kjb+YcA2DzHTAjBIQdMYBdJaJTHLVkL3fKf5wiQhUPy/n+</EncryptedPassword>
+    <_PublishTargetUrl>ftps://waws-prod-bn1-081.ftp.azurewebsites.windows.net/site/wwwroot</_PublishTargetUrl>
+    <History>False|2024-11-26T14:31:43.9518680Z||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>11/25/2024 22:55:15</publishTime>
+    </File>
+    <File Include="LandingServer.deps.json">
+      <publishTime>11/26/2024 09:30:41</publishTime>
+    </File>
+    <File Include="LandingServer.exe">
+      <publishTime>11/26/2024 09:30:41</publishTime>
+    </File>
+    <File Include="LandingServer.pdb">
+      <publishTime>11/26/2024 09:30:40</publishTime>
+    </File>
+    <File Include="LandingServer.runtimeconfig.json">
+      <publishTime>11/26/2024 09:30:42</publishTime>
+    </File>
+    <File Include="LandingServer.staticwebassets.endpoints.json">
+      <publishTime>11/22/2024 15:51:45</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>11/26/2024 09:30:46</publishTime>
+    </File>
+    <File Include="wwwroot/css/bootstrap/bootstrap.min.css">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/bootstrap/bootstrap.min.css.map">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/FONT-LICENSE">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/font/css/open-iconic-bootstrap.min.css">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/font/fonts/open-iconic.eot">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/font/fonts/open-iconic.otf">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/font/fonts/open-iconic.svg">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/font/fonts/open-iconic.ttf">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/font/fonts/open-iconic.woff">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/ICON-LICENSE">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/open-iconic/README.md">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/css/site.css">
+      <publishTime>11/21/2024 09:45:55</publishTime>
+    </File>
+    <File Include="wwwroot/dharmaico.ico">
+      <publishTime>11/21/2024 13:21:12</publishTime>
+    </File>
+    <File Include="wwwroot/favicon.ico">
+      <publishTime>11/19/2024 09:14:52</publishTime>
+    </File>
+    <File Include="wwwroot/images/microsoft-fabric-logo.svg">
+      <publishTime>11/20/2024 15:19:43</publishTime>
+    </File>
+    <File Include="wwwroot/LandingServer.styles.css">
+      <publishTime>11/22/2024 15:51:33</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

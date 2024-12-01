@@ -1,0 +1,171 @@
+﻿@page "/"
+@using System.ComponentModel.DataAnnotations
+@using System.Timers
+@using LandingServer.Models
+@inject HttpClient Http
+@inject LandingServer.Services.IEmailSender EmailSender
+@inject IServerTimeService ServerTimeService
+
+<!-- CONTACT FORM  -->
+<section id="contact">
+    <h2 class="section-title">Del Dato a la Decisión:</h2>
+    <p class="section-description">¿Por qué Microsoft Fabric es la mejor inversión para tu empresa?</p>
+    <div class="main-container">
+        <img src="images/microsoft-fabric-logo.svg" alt="Microsoft Fabric Logo" class="fabric-logo"/>
+
+        <div class="countdown-container">
+            <div id="countdown"
+                 class="countdown @CountdownClass @(CountdownClass == "expired" ? "pulse-animation" : "")">@CountdownText</div>
+        </div>
+
+        <EditForm Model="FormModel" OnValidSubmit="SendEmail">
+            <DataAnnotationsValidator/>
+
+            <div class="form-group">
+                <InputText id="name" aria-label="Nombre" @bind-Value="FormModel.Name" class="form-input"
+                           placeholder="Tu nombre" autocomplete="name"/>
+                <ValidationMessage For="@(() => FormModel.Name)" class="validation-message"/>
+            </div>
+
+            <div class="form-group">
+                <InputText id="phone" aria-label="Teléfono" @bind-Value="FormModel.Phone" class="form-input"
+                           placeholder="Número de Teléfono" autocomplete="tel"/>
+                <ValidationMessage For="@(() => FormModel.Phone)"/>
+            </div>
+
+            <div class="form-group">
+                <InputText id="email" aria-label="Email" @bind-Value="FormModel.Email" class="form-input"
+                           placeholder="Correo electrónico" autocomplete="email"/>
+                <ValidationMessage For="@(() => FormModel.Email)"/>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" id="submitBtn" class="submit-btn @ButtonClass" disabled="@IsSubmitDisabled">
+                    @ButtonText
+                </button>
+            </div>
+
+            @if (IsLoading)
+            {
+                <div class="spinner"></div>
+            }
+        </EditForm>
+
+        @if (ShowPopup)
+        {
+            <div class="popup @(ShowPopup ? "show" : "") @(PopupMessage.Contains("éxito") ? "success" : "error")">
+                <span class="emoji">@((PopupMessage.Contains("éxito") ? "🎉🥳" : "⚠️ 🚫"))</span>
+                <p>@PopupMessage</p>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private string GreenEmoji = "⏰";
+    private string YellowEmoji = "⚠️";
+    private string RedEmoji = "🚨";
+    private bool IsLoading { get; set; } = false;
+    private DateTime EndDate = new DateTime(2024, 11, 29, 12, 00, 0);
+    private Timer CountdownTimer;
+    private string CountdownText = string.Empty;
+    private string CountdownClass = string.Empty;
+    private bool IsSubmitDisabled { get; set; } = false;
+    private ContactFormModel FormModel { get; set; } = new ContactFormModel();
+    private bool ShowPopup { get; set; } = false;
+    private string PopupMessage { get; set; } = string.Empty;
+    private string ButtonClass { get; set; } = string.Empty;
+    private string ButtonText { get; set; } = "Enviar";
+
+    // Initialize the countdown timer
+    protected override void OnInitialized()
+    {
+        StartCountdown();
+    }
+
+    // Start the countdown timer
+    private void StartCountdown()
+    {
+        CountdownTimer = new Timer(1000);
+        CountdownTimer.Elapsed += UpdateCountdown;
+        CountdownTimer.Start();
+    }
+
+    // Update the countdown
+    private void UpdateCountdown(object sender, ElapsedEventArgs e)
+    {
+        // Calculate remaining time
+        var remainingTime = EndDate - DateTime.Now;
+
+        // Check if time has expired
+        if (remainingTime.TotalSeconds <= 0)
+        {
+            CountdownText = "Tiempo finalizado 🚨";
+            CountdownClass = "expired";
+            IsSubmitDisabled = true;
+            CountdownTimer.Stop();
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        // Format the remaining time
+        CountdownText = $"{remainingTime.Days} : {remainingTime.Hours:D2} : {remainingTime.Minutes:D2} : {remainingTime.Seconds:D2}";
+
+        // Assign class based on remaining time
+        if (remainingTime.TotalMinutes > 30)
+        {
+            CountdownClass = "countdown green";
+            CountdownText = $"{GreenEmoji} {CountdownText}";
+        }
+        else if (remainingTime.TotalMinutes > 15)
+        {
+            CountdownClass = "countdown yellow pulse-animation";
+            CountdownText = $"{YellowEmoji} {CountdownText}";
+        }
+        else
+        {
+            CountdownClass = "countdown red pulse-animation";
+            CountdownText = $"{RedEmoji} {CountdownText}";
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    // Send the email
+    private async Task SendEmail()
+    {
+        IsLoading = true;
+        IsSubmitDisabled = true;
+        ButtonText = "Enviando...";
+        try
+        {
+            await EmailSender.SendEmailAsync(FormModel.Name, FormModel.Email, FormModel.Phone);
+            ShowPopup = true;
+            PopupMessage = "¡Formulario enviado con éxito!";
+            FormModel = new ContactFormModel(); // Reset the form
+            await HidePopupAfterDelay();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error al enviar el correo: {ex.Message}");
+            ShowPopup = true;
+            PopupMessage = "Ocurrió un error al enviar el formulario. Por favor, inténtalo más tarde.";
+            await HidePopupAfterDelay();
+        }
+        finally
+        {
+            IsLoading = false;
+            IsSubmitDisabled = false;
+            ButtonText = "Enviar";
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    // Hide the popup after a delay
+    private async Task HidePopupAfterDelay()
+    {
+        await Task.Delay(3000);
+        ShowPopup = false;
+        await InvokeAsync(StateHasChanged);
+    }
+}
